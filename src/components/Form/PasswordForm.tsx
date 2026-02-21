@@ -1,6 +1,6 @@
 import Button from "../UI/Button";
 
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.PNG";
 import PasswordInput from "../UI/PasswordInput";
 
 

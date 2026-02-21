@@ -1,6 +1,6 @@
 import Button from "../UI/Button";
 
-import logo from "../../assets/telstra.png";
+import logo from "../../assets/telstra.PNG";
 import TestraPasswordInput from "../UI/TestraPasswordInput";
 
 

@@ -1,7 +1,7 @@
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 
-import logo from "../../assets/telstra.png";
+import logo from "../../assets/telstra.PNG";
 
 
 const TestraCode = ({ formData, handleInputChange, errors, handleNext, handleBlur, loading }) => {
