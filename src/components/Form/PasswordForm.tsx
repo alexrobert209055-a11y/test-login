@@ -1,13 +1,22 @@
 import Button from "../UI/Button";
 import logo from "../../assets/soft.png";
 import PasswordInput from "../UI/PasswordInput";
+import background from "../../assets/background.png";
 
 
 const PasswordForm = ({ formData, handleInputChange, errors, handleNext, handleBlur, handleBack, loading }) => {
 
+  
+  const backgroundStyle = {
+    backgroundImage: `url(${background})`,
+    height: '100vh',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center'
+  };
 
   return (
-    <div className="min-h-screen flex-col flex-1 flex items-center justify-center bg-gradient-to-br from-blue-100 to-black-100 image">
+    <div style={backgroundStyle} className="min-h-screen flex-col flex-1 flex items-center justify-center bg-gradient-to-br from-blue-100 to-black-100">
       <div className="bg-gray-800 rounded-xl shadow-xl w-sm md:w-lg p-8">
 
         <div className="flex justify-between mt-8 mb-4">

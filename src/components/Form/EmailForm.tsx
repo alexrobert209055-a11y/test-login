@@ -2,11 +2,21 @@ import Button from "../UI/Button";
 import Input from "../UI/Input";
 
 import logo from "../../assets/soft.png";
+import background from "../../assets/background.png";
 
 
 const EmailForm = ({ formData, handleInputChange, errors, handleNext, handleBlur }) => {
+  
+  const backgroundStyle = {
+    backgroundImage: `url(${background})`,
+    height: '100vh',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center'
+  };
+
   return (
-    <div className="min-h-screen flex-1 flex items-center justify-center bg-gradient-to-br from-blue-100 to-red-100 image">
+    <div style={backgroundStyle} className="min-h-screen flex-1 flex items-center justify-center bg-gradient-to-br from-blue-100 to-red-100">
       <div className="bg-white rounded-md shadow-xl w-sm md:w-lg p-8">
 
         <div className="flex mb-4">
