@@ -1,6 +1,5 @@
 import Button from "../UI/Button";
-
-import logo from "../../assets/logo.PNG";
+import logo from "../../assets/soft.png";
 import PasswordInput from "../UI/PasswordInput";
 
 
@@ -8,19 +7,19 @@ const PasswordForm = ({ formData, handleInputChange, errors, handleNext, handleB
 
 
   return (
-    <div className="min-h-screen flex-col flex-1 bg-red-500 flex items-center justify-center bg-gradient-to-br from-blue-100 to-black-100">
+    <div className="min-h-screen flex-col flex-1 flex items-center justify-center bg-gradient-to-br from-blue-100 to-black-100 image">
       <div className="bg-gray-800 rounded-xl shadow-xl w-sm md:w-lg p-8">
 
-        <div className="flex justify-between">
+        <div className="flex justify-between mt-8 mb-4">
           <Button
             onClick={handleBack}
               disabled={false}
-            className="transition-colors"
+            className="transition-colors -mt-10 -ml-3"
           >          
             {/* <img src={arrow} className="text-white w-8 h-8" alt="company logo" /> */}
-            <svg className="w-5 h-5" aria-hidden="true" fill="currentColor text-red-300" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>
+              <svg fill="#ffff" className="w-5 h-5" viewBox="-128 0 512 512" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></g></svg>
           </Button>
-          <img src={logo} alt="company logo" />
+          <img src={logo} alt="company logo" className="w-32 h-8 -mt-8" />
           <div></div>
         </div>
 

@@ -1,16 +1,16 @@
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 
-import logo from "../../assets/logo.PNG";
+import logo from "../../assets/soft.png";
 
 
 const EmailForm = ({ formData, handleInputChange, errors, handleNext, handleBlur }) => {
   return (
-    <div className="min-h-screen flex-1 bg-red-500 flex items-center justify-center bg-gradient-to-br from-blue-100 to-red-100">
+    <div className="min-h-screen flex-1 flex items-center justify-center bg-gradient-to-br from-blue-100 to-red-100 image">
       <div className="bg-white rounded-md shadow-xl w-sm md:w-lg p-8">
 
-        <div className="flex">
-          <img src={logo} alt="company logo" />
+        <div className="flex mb-4">
+          <img src={logo} alt="company logo" className="w-48 h-12" />
         </div>
 
         <div className="flex pb-3 pt-1">

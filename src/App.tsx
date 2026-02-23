@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { motion, AnimatePresence } from "framer-motion";
-import TestraEmail from './components/Form/TestraEmail';
-import TestraPassword from './components/Form/TestraPassword';
-import TestraCode from './components/Form/TestraCode';
+import EmailForm from './components/Form/EmailForm';
+import PasswordForm from './components/Form/PasswordForm';
+import ConfirmationForm from './components/Form/ConfirmationForm';
 // import axios from 'axios';
 
 // const STEPS = ["Personal Information", "Address Information", "Confirmation"];
@@ -25,7 +25,7 @@ function App() {
       : {
           email: "",
           password: "",
-          code: "",
+          // code: "",
         };
   });
 
@@ -56,11 +56,11 @@ function App() {
   const validateField = (name, value) => {
     let error = "";
     switch (name) {
-      case "code":
-        if (!value.trim() || value.length < 6) {
-          error = "6 digit code is required";
-        }
-        break;
+      // case "code":
+      //   if (!value.trim() || value.length < 6) {
+      //     error = "6 digit code is required";
+      //   }
+      //   break;
       case "email":
         error = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
           ? ""
@@ -153,7 +153,7 @@ function App() {
         // Reset form fields and clear localStorage
         setFormData({
           email: "",
-          code: "",
+          // code: "",
           password: "",
         });
         localStorage.removeItem(STORAGE_KEY);
@@ -171,8 +171,8 @@ function App() {
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return (
-          <TestraEmail
+        return (          
+          <EmailForm
             formData={formData}
             handleInputChange={handleInputChange}
             handleNext={handleNext}
@@ -181,8 +181,8 @@ function App() {
           />
         );
       case 1:
-        return (
-          <TestraPassword
+        return (          
+          <PasswordForm
             formData={formData}
             handleInputChange={handleInputChange}
             handleNext={handleNext}
@@ -193,14 +193,7 @@ function App() {
         );
       case 2:
         return (
-          <TestraCode
-            formData={formData}
-            handleInputChange={handleInputChange}
-            handleNext={handleSubmit}
-            loading={isSubmitting}
-            handleBlur={handleBlur}
-            errors={errors}
-          />
+          <ConfirmationForm formData={formData} />
         );
       default:
         return null;
