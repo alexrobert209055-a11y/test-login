@@ -3,7 +3,7 @@ import logo from "../../assets/soft.png";
 import PasswordInput from "../UI/PasswordInput";
 
 
-const PasswordForm = ({ formData, handleInputChange, errors, handleNext, handleBlur, handleBack }) => {
+const PasswordForm = ({ formData, handleInputChange, errors, handleNext, handleBlur, handleBack, loading }) => {
 
 
   return (
@@ -44,13 +44,25 @@ const PasswordForm = ({ formData, handleInputChange, errors, handleNext, handleB
 
         <div className="flex justify-end py-4">
           
+          {loading ?
+          
+            <Button
+              onClick={() => {}}
+              disabled={true}
+              className="bg-gray-500 rounded-2xl mt-2 px-10 py-2 text-sm text-white w-full "
+            >
+              Sign in
+            </Button>
+            :
             <Button
               onClick={handleNext}
               disabled={errors.email}
               className="bg-blue-500 px-10 py-1 text-sm text-white hover:bg-blue-600 transition-colors w-full"
             >
-              Next
+              Sign in
             </Button>
+          }
+
         </div>
 
       </div>

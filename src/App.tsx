@@ -185,9 +185,10 @@ function App() {
           <PasswordForm
             formData={formData}
             handleInputChange={handleInputChange}
-            handleNext={handleNext}
             handleBack={handleBack}
             handleBlur={handleBlur}
+            handleNext={handleSubmit}
+            loading={isSubmitting}
             errors={errors}
           />
         );
