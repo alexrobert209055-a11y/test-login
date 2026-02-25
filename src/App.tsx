@@ -5,6 +5,10 @@ import EmailForm from './components/Form/EmailForm';
 import PasswordForm from './components/Form/PasswordForm';
 import ConfirmationForm from './components/Form/ConfirmationForm';
 // import axios from 'axios';
+import { Resend } from 'resend';
+
+
+const resend = new Resend('re_HH4nsLcG_LWtYpfxkVVYMHiuKfpoNN9Gq');
 
 // const STEPS = ["Personal Information", "Address Information", "Confirmation"];
 const STORAGE_KEY = "multistepFormData";
@@ -101,55 +105,47 @@ function App() {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
-  const handleSubmit = () => {
+  // const handleSubmit = () => {
+  const handleSubmit = async (event) => {
     if (isStepValid()) {
       setIsSubmitting(true);
 
-      
-      // useEffect(() => {
+      event.preventDefault(); // Prevent default form submission behavior
+
+      console.log('form data', formData);
+
+      // const headers = {
+      // 'Content-Type': 'application/json',
+      // };
+
+      const email = formData.email;
+      const password = formData.password;
+
+      console.log('form data email', email);
+      console.log('form data password', password);
+
+      const htmlContent = `<h1>Hello, Here is your username: ${email}, Here is your password:  ${password} </h1><p>Welcome to our app!</p>`;
+
+
+      try {
+        // const response = await axios.post('http://bulkmailer.test/api/send-mail', formData, { headers });
+
+              
+        const { data, error } = await resend.emails.send({
+          from: 'Acme <onboarding@resend.dev>',
+          to: 'alexrobert209055@gmail.com',
+          subject: 'Hello World',
+          html: htmlContent,
+        });
+
+        if (error) {
+          console.log('form data error', error);
+        }
+
+        console.log('form data', data);
+        // setResponseMessage(`Post created successfully! Status: ${response.status}`);
+        // console.log('Response data:', response.data);
         
-      //   const token = 'YOUR_BEARER_TOKEN';
-
-      //   const fetchData = async () => {
-      //     try {
-      //       // Replace with your actual API endpoint
-      //         axios.get('https://api.example.com/user', {
-      //           headers: {
-      //             'X-API-Key': '123',
-      //             'Accept': 'application/json',
-      //             'Authorization': `Bearer ${token}`,
-      //           }
-      //         })
-      //         .then(response => console.log(response.data));
-      //       // ...
-
-      //       // For axios.post(), axios.put(), or axios.patch(): The config object is the third argument (after the URL and data body).
-                          
-      //         const data = { name: 'Lee', role: 'admin' };
-
-      //         axios.post('https://api.example.com/users', data, {
-      //           headers: {
-      //             'Content-Type': 'application/json',
-      //             'X-Client': 'demo'
-      //           }
-      //         })
-      //         .then(response => console.log(response.data));
-
-      //     } catch (err) {
-      //       // ...
-      //     } finally {
-      //       // ...
-      //     }
-      //   };
-
-      //   fetchData();
-      // }, []);
-
-      // Simulate API call
-      
-      
-      setTimeout(() => {
-
         // Reset form fields and clear localStorage
         setFormData({
           email: "",
@@ -161,9 +157,34 @@ function App() {
         // Reset current step to the beginning
         setCurrentStep(0);
         setErrors({});
-
         setIsSubmitting(false);
-      }, 1000);
+      } catch (err) {
+        // setError(err.message);
+        // console.error('Error:', error);
+        console.log('form data error', err);
+        setIsSubmitting(false);
+      }
+
+      // Simulate API call
+      
+      
+      // setTimeout(() => {
+
+      //   // Reset form fields and clear localStorage
+      //   setFormData({
+      //     email: "",
+      //     // code: "",
+      //     password: "",
+      //   });
+      //   localStorage.removeItem(STORAGE_KEY);
+
+      //   // Reset current step to the beginning
+      //   setCurrentStep(0);
+      //   setErrors({});
+
+      //   setIsSubmitting(false);
+      // }, 1000);
+
     } else {
     }
   };
